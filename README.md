@@ -2,16 +2,16 @@
 
 # Faithful Tweaks
 <p>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/actions"><img alt="Website Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaks/workflows/Website%20Deploy/badge.svg"></a>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/actions"><img alt="Functions Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaks/workflows/Functions%20Deploy/badge.svg"></a>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/actions"><img alt="Images Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaks/workflows/Images%20Deploy/badge.svg"></a>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/FaithfulTweaks/FaithfulTweaks"></a>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/FaithfulTweaks/FaithfulTweaks"></a>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/FaithfulTweaks/FaithfulTweaks"></a>
-    <a href="https://github.com/FaithfulTweaks/FaithfulTweaks/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/FaithfulTweaks/FaithfulTweaks"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/actions"><img alt="Website Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/workflows/Website%20Deploy/badge.svg"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/actions"><img alt="Functions Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/workflows/Functions%20Deploy/badge.svg"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/actions"><img alt="Images Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/workflows/Images%20Deploy/badge.svg"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/FaithfulTweaks/FaithfulTweaksBedrock"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/FaithfulTweaks/FaithfulTweaksBedrock"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/FaithfulTweaks/FaithfulTweaksBedrock"></a>
+    <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/FaithfulTweaks/FaithfulTweaksBedrock"></a>
 </p>
 
-An open source recreation of [Vanilla Tweaks](https://vanillatweaks.net/picker/resource-packs/) for the Faithful x32 Texturepack by [The Faithful Team](https://faithful.team/).
+A fork of [Faithful Tweaks](https://github.com/FaithfulTweaks/FaithfulTweaks/) built for the Bedrock Edition of [Minecraft](https://minecraft.net/).
 
 ## Creating Modules
 If you're interested in creating a module, please look at [the wiki](https://github.com/FaithfulTweaks/FaithfulTweaks/wiki).
