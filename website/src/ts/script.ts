@@ -1,10 +1,8 @@
 import 'bootstrap';
 import $ from 'jquery';
 
-let format: string = "1-16-2";
 const modules: string[] = [];
 const iconModules: string[] = [];
-let optionsBackground: string;
 let panoOption: string;
 
 // When content is loaded
@@ -45,7 +43,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     
     document.querySelector('#downloadPack').addEventListener('click', downloadPack); // Download
-    document.querySelectorAll('#formatGroup                >*').forEach((e: HTMLElement) => e.addEventListener('click', setFormat));                    // Format buttons
 
     // Hover
     document.querySelectorAll('.module-selector').forEach((e: HTMLElement) => e.addEventListener('mouseover', moduleHover));
@@ -63,32 +60,8 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#hudModulesConflicting      >*').forEach((e: HTMLElement) => e.addEventListener('click', setIconModuleConflicting));   // Conflicting normal modules
 
     // Options and Panoramas
-    document.querySelectorAll('#optionsbgModules           >*').forEach((e: HTMLElement) => e.addEventListener('click', setBackground));              // Backgrounds
     document.querySelectorAll('#panoramasModules           >*').forEach((e: HTMLElement) => e.addEventListener('click', setPano));                    // Panoramas
 });
-
-
-// Set format to the last number of ID
-function setFormat(this: HTMLElement) {
-    // Make all buttons light
-    Array.from(this.parentNode.children).forEach((e: HTMLElement) => {
-        e.classList.remove("btn-dark");
-        e.classList.add("btn-light");
-    });
-
-    // Set clicked button to dark
-    this.classList.remove("btn-light");
-    this.classList.add("btn-dark");
-
-    // Set format to last character of the buttons ID
-    format = this.id.replace('format', '');
-
-    // Show all
-    document.querySelectorAll('.module-selector').forEach((e: HTMLElement) => e.style.display = '');
-
-    // Hide incompatible modules
-    document.querySelectorAll('.hideFormat'+format).forEach((e: HTMLElement) => e.style.display = 'none');
-}
 
 // On hover
 function moduleHover(this: HTMLElement) {
@@ -237,22 +210,6 @@ function setIconModuleConflicting (this: HTMLElement) {
     }
 };
 
-// Set background function
-function setBackground(this: HTMLElement) {
-    // For each sibling
-    Array.prototype.filter.call(this.parentNode.children, (c: HTMLElement) => { return c !== this; }).forEach((e: HTMLElement) => e.classList.remove("enabled"));
-
-    // If is var disable
-    if (optionsBackground === this.id) {
-        optionsBackground = undefined;
-        this.classList.remove('enabled'); // Remove class
-    } else {
-        // Else enable
-        optionsBackground = this.id;
-        this.classList.add("enabled"); // Add class
-    }
-}
-
 // Set pano function
 function setPano(this: HTMLElement) {
     // For each sibling
@@ -271,9 +228,6 @@ function setPano(this: HTMLElement) {
 
 // Download the resource pack
 function downloadPack() {
-    // Update format to fit version number scheme
-    const version = format.replace('-', '.').replace('-', '.'); // Somewhat messy way of making sure both "-"s get changed 
-
     document.querySelectorAll('.alert').forEach((e: HTMLElement) => e.style.display = 'none'); // Hide alerts
     (<HTMLElement>document.querySelector('#creating-alert')).style.display = 'block'; // Create alert
 
@@ -281,10 +235,8 @@ function downloadPack() {
     const request = new XMLHttpRequest(); // Request
     const url = process.env["NODE_ENV"] !== 'production' ? "http://localhost:5001/faithfultweaks-bedrock/us-central1/makePack" : "https://us-central1-faithfultweaks-bedrock.cloudfunctions.net/makePack"; // URL (based on node environment status)
     const data = {
-        "format": version,
         "modules": modules,
         "iconModules": iconModules,
-        "optionsBackground": optionsBackground,
         "panoOption": panoOption,
     };
     
