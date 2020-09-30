@@ -1,6 +1,6 @@
 [<img src="https://faithfultweaks.com/images/logo.png" alt="Faithful Tweaks Logo" width="150px" />](https://faithfultweaks.com/)
 
-# Faithful Tweaks
+# Faithful Tweaks Bedrock
 <p>
     <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/actions"><img alt="Website Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/workflows/Website%20Deploy/badge.svg"></a>
     <a href="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/actions"><img alt="Functions Deploy" src="https://github.com/FaithfulTweaks/FaithfulTweaksBedrock/workflows/Functions%20Deploy/badge.svg"></a>
