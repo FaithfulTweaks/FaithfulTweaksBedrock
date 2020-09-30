@@ -1,8 +1,7 @@
 // Module Data
 import { addModules } from "./modules";
-import { addIconModules } from "./modules/iconModules";
-import { addOptionsBG } from "./modules/optionsBGModules";
-import { addMenuPanorama } from "./modules/panoramaModules";
+import { addIconModules } from "./iconModules";
+import { addMenuPanorama } from "./panoramaModules";
 
 // Archiver
 import * as archiver from 'archiver';
@@ -12,13 +11,6 @@ import * as path from 'path';
 
 // Usefull tools
 import { v4 as uuidv4 } from 'uuid';
-
-// Express
-// import * as express from "express";
-// const app = express();
-// const port: number = 3000;
-// app.use(express.json()) // for parsing application/json
-// app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Firebase
 import * as functions from 'firebase-functions';
@@ -40,13 +32,12 @@ exports.deletePacks = functions.pubsub.schedule('0 4 * * *').onRun(async (cxt) =
         if (err) {
             console.log(err);
         } else {
-            console.log('All the zip files FaithfulTweaks/ have been deleted');
+            console.log('All the zip files in FaithfulTweaks/ have been deleted');
         }
     });
 
 });
 
-// app.post('/', ----- EXPRESS STUFF
 // Create a zip file from file in storage ----- CLOUD FUNCTION -----
 exports.makePack = functions.https.onRequest(async (req, res) => {
     res.set('Access-Control-Allow-Origin', process.env.NODE_ENV !== 'production' ? '*' : 'https://faithfultweaks.com');
@@ -57,10 +48,8 @@ exports.makePack = functions.https.onRequest(async (req, res) => {
     const tempFilePath = path.join(os.tmpdir(), 'texturepack.zip'); // Zip path
 
     // Get body data
-    const format: string = req.body.format;
     const modules: string[] = req.body.modules;
     const iconModules: string[] = req.body.iconModules;
-    const optionsBackground: string = req.body.optionsBackground;
     const panoOption: string = req.body.panoOption;
 
     // ----- CREATE THE ARCHIVE -----
@@ -86,26 +75,18 @@ exports.makePack = functions.https.onRequest(async (req, res) => {
 
 
     // ----- ADD FILES TO THE ARCHIVE -----
-    archive.append(mcMeta(format), {name: 'pack.mcmeta'}); // add mcmeta file
-    archive.append(moduleSelection(format, modules, iconModules, optionsBackground, panoOption), {name: 'modules.txt'}); // add modules.txt file
+    archive.append(mcManifest, {name: 'manifest.json'}); // add mcmeta file
+    archive.append(moduleSelection(modules, iconModules, panoOption), {name: 'modules.txt'}); // add modules.txt file
     archive.append(creditsTxt, {name: 'credits.txt'}); // add credits.txt file
     
-    // Add pack icon
-    // await bucket.file('packfiles/pack.png').download().then((data) => {
-    //     return archive.append(data[0], {name: 'pack.png'});
-    // });
-    archive.file(path.join('images', 'pack.png'), {name: 'pack.png'});
+    archive.file(path.join('images', 'pack_icon.png'), {name: 'pack_icon.png'});
     
     if (modules !== undefined && modules !== null) {
-        await addModules(format, archive, modules, bucket); // Add modules to the pack
+        await addModules(archive, modules, bucket); // Add modules to the pack
     }
 
     if (iconModules !== undefined && iconModules !== null) {
         await addIconModules(iconModules, archive, bucket); // Add icon modules to icons.png
-    }
-
-    if (optionsBackground !== undefined && optionsBackground !== null) {
-        await addOptionsBG(optionsBackground, archive, bucket); // Add options background
     }
     
     if (panoOption !== undefined && panoOption !== null) {
@@ -118,7 +99,7 @@ exports.makePack = functions.https.onRequest(async (req, res) => {
     const fileUUID = uuidv4();
     const tokenUUID = uuidv4();
 
-    const newPackPath = path.join('FaithfulTweaks', fileUUID + '.zip'); // New file upload path
+    const newPackPath = path.join('FaithfulTweaks', fileUUID + '.mcpack'); // New file upload path
 
     // Metadata
     const metadata = {
@@ -150,41 +131,28 @@ exports.makePack = functions.https.onRequest(async (req, res) => {
     
 });
 
-// Make the mcmeta file
-function mcMeta(format: string) {
-    let formatStr = format;
-
-    // Get pack format from version
-    let packFormat: number;
-    if (format === "1.8") {
-        packFormat = 1;
-    } else if (format === "1.9" || format === "1.10") {
-        packFormat = 2;
-    } else if (format === "1.11" || format === "1.12") {
-        packFormat = 3;
-    } else if (format === "1.13" || format === "1.14") {
-        packFormat = 4;
-    } else if (format === "1.15" || format === "1.16") {
-        packFormat = 5;
-    } else if (format === "1.16.2") {
-        packFormat = 6;
-    } else {
-        packFormat = 1
-        formatStr = "Error making pack";
-    }
-
-    return (
-`{
-    "pack": {
-        "pack_format": `+packFormat+`,
-        "description": "§aFaithful Tweaks §6- §c`+formatStr+`\\n§b§nfaithfultweaks.com"
-    }
-}`
-    );
-}
+// Make the manifest.json file
+const mcManifest = `{
+    "format_version": 2,
+    "header": {
+        "description": "§b§nfaithfultweaks.com",
+        "name": "§aFaithful Tweaks",
+        "uuid": "${uuidv4()}",
+        "version": [0, 0, 1],
+        "min_engine_version": [ 1, 14, 0 ]
+    },
+    "modules": [
+        {
+            "description": "§aFaithful Tweaks §6- §b§nfaithfultweaks.com",
+            "type": "resources",
+            "uuid": "${uuidv4()}",
+            "version": [0, 0, 1]
+        }
+    ]
+}`;
 
 // Make the modules.txt file
-function moduleSelection(format: string, modules: string[], iconModules: string[], optionsBackground: string, panoOption: string) {
+function moduleSelection(modules: string[], iconModules: string[], panoOption: string) {
     // Make string of modules
     let modStr = '';
     if (modules !== undefined && modules !== null) {
@@ -204,13 +172,6 @@ function moduleSelection(format: string, modules: string[], iconModules: string[
     }
 
     // Make string with options background
-    let optionsStr = '';
-    if (optionsBackground !== undefined && optionsBackground !== null) {
-        optionsStr = optionsStr + '\nOptions Background:\n';
-        optionsStr = optionsStr + '    '+optionsBackground+'\n';
-    }
-
-    // Make string with options background
     let panoStr = '';
     if (panoOption !== undefined && panoOption !== null) {
         panoStr = panoStr + '\nPanorama Background:\n';
@@ -218,7 +179,7 @@ function moduleSelection(format: string, modules: string[], iconModules: string[
 
     }
 
-    return ('Faithful Tweaks generated pack\nVersion: '+format+'\n'+modStr+hudStr+optionsStr+panoStr);
+    return ('Faithful Tweaks generated pack.\n'+modStr+hudStr+panoStr);
 }
 
 // The credits.txt file contents
@@ -228,8 +189,3 @@ Faithful Textures by xMrVizzy: https://faithful.team
 
 This pack is a modification of The Faithful 32x pack. 
 Modifications are based off of/inspired by the packs by Vanilla tweaks.`
-
-// Have express app listen on the set port
-// app.listen(port, () => {
-//     console.log(`Example app listening at http://localhost:${port}`);
-// });
