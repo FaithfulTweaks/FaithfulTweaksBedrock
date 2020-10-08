@@ -2,7 +2,7 @@
     <br>
     <a href="https://faithfultweaks.com/"><img src="https://raw.githubusercontent.com/FaithfulTweaks/FaithfulTweaks/master/website/static/images/logo.png" alt="Faithful Tweaks" width="150"></a>
     <br>
-    Faithful Tweaks
+    Faithful Tweaks Bedrock
     <br>
 </h1>
 
